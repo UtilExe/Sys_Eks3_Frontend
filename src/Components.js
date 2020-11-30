@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Prompt, Link } from 'react-router-dom';
 import apiFacade from './apiFacade';
 import Table from 'react-bootstrap/Table';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import jwt_decode from "jwt-decode";
 
@@ -56,6 +58,36 @@ export function Home() {
             </div>
         </div>
     );
+}
+
+export function SongLookup() {
+    
+    return (
+        <div>
+            <h2>Song Lookup</h2>
+            <hr/>
+            <div className="wrapper">
+                <form>
+                    <div className="row">
+                        <div className="one">
+                            <p>Song title</p>
+                            <input placeholder="Song title..." id="title" />
+                        </div>
+                        <div className="two">
+                            <p>Song artist</p>
+                            <input placeholder="Song artist..." id="artist" />
+                        </div>
+                    </div>
+                    <div className="one">
+                        <button type="submit" className="btn btn-black border-primary">Go!</button>
+                    </div>
+                </form>
+            </div>
+                
+            <hr/>
+            <h3>Information received goes here...</h3>
+        </div>
+    )
 }
 
 export function Login({ login }) {
