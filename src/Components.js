@@ -78,41 +78,45 @@ export function Login({ login }) {
                 <br/>
                 <input placeholder="Password" id="password" />
                 <br/>
-                <button onClick={performLogin} type="button" class="btn btn-black border-primary">Login</button>
+                <button onClick={performLogin} type="button" className="btn btn-black border-primary">Login</button>
             </form>
             
             <br/>
             <hr/>
             <h2>Don't have an account?</h2>
-            <button onClick={Signup} type="button" class="btn btn-black border-primary">Sign Up</button>
+            <Link to={"/sign-up"}>
+                <button type="button" className="btn btn-black border-primary">Sign Up</button>
+                </Link>
             <hr/>
         </div>
     )
 }
 
-export function Signup() {
-    const init = { username: "", password: "" };
-    const [loginCredentials, setLoginCredentials] = useState(init);
+export function Signup({signup}) {
 
-    const performLogin = (evt) => {
+    const init = { username: "", password: "", passwordCheck: ""};
+    const [signUpAcc, setSignUp] = useState(init);
+
+    const performSignup = (evt) => {
         evt.preventDefault();
-       
+        signup(signUpAcc.username, signUpAcc.password, signUpAcc.passwordCheck);
     }
     const onChange = (evt) => {
-        setLoginCredentials({ ...loginCredentials, [evt.target.id]: evt.target.value })
+        setSignUp({ ...signUpAcc, [evt.target.id]: evt.target.value })
     }
 
     return (
         <div>
-            <h2>Sign up here</h2>
+            <h2>Sign up</h2>
             <form onChange={onChange}>
                 <input placeholder="Username" id="username" /> 
                 <br/>
                 <input placeholder="Password" id="password" />
                 <br/>
-                <button onClick={performLogin} type="button" class="btn btn-black border-primary">Login</button>
+                <input placeholder="Password Checked" id="passwordCheck" />
+                <br/>
+                <button onClick={performSignup} type="button" className="btn btn-black border-primary">Signup</button>
             </form>
-
         </div>
     )
 

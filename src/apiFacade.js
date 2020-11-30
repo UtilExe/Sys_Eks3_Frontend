@@ -1,4 +1,4 @@
-import URLS, {servicepointsURL, movieReviewURL, digitaloceanURL, loginURL} from './Settings';
+import URLS, {servicepointsURL, movieReviewURL, digitaloceanURL, loginURL, signUpURL} from './Settings';
 
 function getServicePoints(address) {
     const options = makeOptions("POST", true, address);
@@ -40,6 +40,12 @@ const login = (user, password) => {
         .then(res => { setToken(res.token) })
 }
 
+const signup = (user, password, passwordCheck) => {
+    const options = makeOptions("POST", true, { username: user, password: password, passwordCheck: passwordCheck });
+    return fetch(signUpURL, options)
+        .then(handleHttpErrors);
+}
+
 const apiFacade = {
     getServicePoints,
     getMovieReviews,
@@ -48,7 +54,8 @@ const apiFacade = {
     getToken,
     loggedIn,
     logout,
-    login
+    login,
+    signup
 }
 
 function makeOptions(method, addToken, body) {

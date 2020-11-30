@@ -26,6 +26,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [error, setError] = useState('');
   const [username, setUserName] = useState("");
+  const [signUpMsg, setSignUpMsg] = useState("");
 
   const logout = () => {
     apiFacade.logout()
@@ -45,6 +46,19 @@ function App() {
       })
   }
 
+  const signup = (user, pass, passChecked) => {
+    apiFacade.signup(user, pass, passChecked)
+      .then(res => {
+        setError('');
+        setSignUpMsg("Works!");
+      })
+      .catch(err => {
+        setError("Couldn't register, see error in console for further information");
+        console.log(err);
+        setSignUpMsg("Not working!");
+      })
+  }
+
 
   return (
     <Router>
@@ -59,7 +73,12 @@ function App() {
           </Route>
           <Route path="/address-info">
            <Address />
-          </Route>
+           </Route>
+          <Route path="/sign-up">
+           <Signup signup={signup} />
+           <br/>
+          {signUpMsg}
+           </Route>
           <Route path="/movie-reviews">
            <Movies />
           </Route>
@@ -73,7 +92,6 @@ function App() {
               <LoggedIn username={username}/>
               <button onClick={logout}>Logout</button>
             </div>)}
-            
             {error}
           </div>
          
