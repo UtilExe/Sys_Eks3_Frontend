@@ -74,12 +74,48 @@ export function Login({ login }) {
         <div>
             <h2>Login here</h2>
             <form onChange={onChange}>
-                <input placeholder="Username" id="username" />
+                <input placeholder="Username" id="username" /> 
+                <br/>
                 <input placeholder="Password" id="password" />
-                <button onClick={performLogin}>Login</button>
+                <br/>
+                <button onClick={performLogin} type="button" class="btn btn-black border-primary">Login</button>
             </form>
+            
+            <br/>
+            <hr/>
+            <h2>Don't have an account?</h2>
+            <button onClick={Signup} type="button" class="btn btn-black border-primary">Sign Up</button>
+            <hr/>
         </div>
     )
+}
+
+export function Signup() {
+    const init = { username: "", password: "" };
+    const [loginCredentials, setLoginCredentials] = useState(init);
+
+    const performLogin = (evt) => {
+        evt.preventDefault();
+       
+    }
+    const onChange = (evt) => {
+        setLoginCredentials({ ...loginCredentials, [evt.target.id]: evt.target.value })
+    }
+
+    return (
+        <div>
+            <h2>Sign up here</h2>
+            <form onChange={onChange}>
+                <input placeholder="Username" id="username" /> 
+                <br/>
+                <input placeholder="Password" id="password" />
+                <br/>
+                <button onClick={performLogin} type="button" class="btn btn-black border-primary">Login</button>
+            </form>
+
+        </div>
+    )
+
 }
 
 export function LoggedIn({username}) {
