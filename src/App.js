@@ -55,10 +55,11 @@ function App() {
       .catch(err => {
         setError("Couldn't register, see error in console for further information");
         console.log(err);
-        setSignUpMsg("Not working!");
+        Promise.resolve(err.fullError).then(function(value) {
+          setSignUpMsg(value.message);
+        })
       })
   }
-
 
   return (
     <Router>
