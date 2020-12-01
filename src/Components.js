@@ -62,13 +62,13 @@ export function SongLookup() {
 
     const init = { song: "", artist: "" };
     const [search, setSearch] = useState(init);
+    const [data, setData] = useState({});
 
     function handleSubmit(event) {
         event.preventDefault();
-        console.log(search);
         apiFacade.getSongInformation(search)
         .then(data => {
-            console.log(data);
+            setData(data);
         })
     }
 
@@ -101,6 +101,7 @@ export function SongLookup() {
                 
             <hr/>
             <h3>Information received goes here...</h3>
+            { JSON.stringify(data, null, 2) }
         </div>
     )
 }
