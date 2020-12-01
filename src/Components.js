@@ -62,21 +62,42 @@ export function SongLookup() {
 
     const init = { song: "", artist: "" };
     const [search, setSearch] = useState(init);
+    const [songInformation, setSongInformation] = useState('');
 
     function handleSubmit(event) {
         event.preventDefault();
-        console.log(search);
         apiFacade.getSongInformation(search)
         .then(data => {
-            console.log(data);
-        })
+            setSongInformation(data)
+        });
     }
 
     function handleChange(event) {
         setSearch({...search, [event.target.id]: event.target.value});
     };
 
-    
+    function itunes() {
+        const songName = songInformation.results[0].trackName;
+        const artistName = songInformation.results[0].artistName;
+        const releaseDate = songInformation.results[0].releaseDate;
+        const price = songInformation.results[0].trackPrice;
+        const country = songInformation.results[0].country;
+        const currency = songInformation.results[0].currency;
+        const album = songInformation.results[0].collectionName;
+
+        return (
+            <React.Fragment>
+                <p>{songName}</p>
+                <p>{artistName}</p>
+                <p>{releaseDate}</p>
+                <p>{price}</p>
+                <p>{country}</p>
+                <p>{currency}</p>
+                <p>{album}</p>
+            </React.Fragment>
+        )
+    }
+
     return (
         <div>
             <h2>Song Lookup</h2>
@@ -101,6 +122,9 @@ export function SongLookup() {
                 
             <hr/>
             <h3>Information received goes here...</h3>
+            <div>
+                { itunes }
+            </div>
         </div>
     )
 }
@@ -183,7 +207,6 @@ const  decoded = jwt_decode(token); // jwt_decode is an external library
 
 export function DigitalOcean() {
 
-    const [string, setString] = useState('');
     const [droplets, setDroplets] = useState([]);
     const display = droplets.map((droplet, index) => {
         const network = droplet.networks.v4[0];
@@ -232,7 +255,7 @@ export function DigitalOcean() {
     useEffect (() => {
                apiFacade.getDigitalOceanInfo()
                .then(data => setDroplets(data.droplets))
-    }, [string])
+    }, [])
 
 
     return (
