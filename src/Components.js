@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Prompt, Link } from 'react-router-dom';
 import apiFacade from './apiFacade';
 import Table from 'react-bootstrap/Table';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import jwt_decode from "jwt-decode";
 
@@ -62,15 +60,11 @@ export function Home() {
 
 export function SongLookup() {
 
-    const init = { title: "", artist: "" };
+    const init = { song: "", artist: "" };
     const [search, setSearch] = useState(init);
 
     function handleSubmit(event) {
         event.preventDefault();
-        setSearch({
-            title: event.target.title,
-            artist: event.target.artist
-        });
         console.log(search);
         apiFacade.getSongInformation(search)
         .then(data => {
@@ -78,14 +72,9 @@ export function SongLookup() {
         })
     }
 
-    /* function handleChange(event) {
-        const { title, search } = event.target;
-        setIsBlocking(event.target.value.length > 0);
-        setSearch({
-            title: event.target.title,
-            artist: event.target.artist
-        });
-      }; */
+    function handleChange(event) {
+        setSearch({...search, [event.target.id]: event.target.value});
+    };
 
     
     return (
@@ -93,11 +82,11 @@ export function SongLookup() {
             <h2>Song Lookup</h2>
             <hr/>
             <div className="wrapper">
-                <form onSubmit={handleSubmit}>
+                <form onChange={handleChange} onSubmit={handleSubmit}>
                     <div className="row">
                         <div className="one">
                             <p>Song title</p>
-                            <input placeholder="Song title..." id="title" />
+                            <input placeholder="Song title..." id="song" />
                         </div>
                         <div className="two">
                             <p>Song artist</p>
