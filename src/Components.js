@@ -61,13 +61,39 @@ export function Home() {
 }
 
 export function SongLookup() {
+
+    const init = { title: "", artist: "" };
+    const [search, setSearch] = useState(init);
+
+    function handleSubmit(event) {
+        event.preventDefault();
+        setSearch({
+            title: event.target.title,
+            artist: event.target.artist
+        });
+        console.log(search);
+        apiFacade.getSongInformation(search)
+        .then(data => {
+            console.log(data);
+        })
+    }
+
+    /* function handleChange(event) {
+        const { title, search } = event.target;
+        setIsBlocking(event.target.value.length > 0);
+        setSearch({
+            title: event.target.title,
+            artist: event.target.artist
+        });
+      }; */
+
     
     return (
         <div>
             <h2>Song Lookup</h2>
             <hr/>
             <div className="wrapper">
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className="row">
                         <div className="one">
                             <p>Song title</p>
@@ -79,7 +105,7 @@ export function SongLookup() {
                         </div>
                     </div>
                     <div className="one">
-                        <button type="submit" className="btn btn-black border-primary">Go!</button>
+                        <button type="submit" className="btn btn-black btnBorder">Go!</button>
                     </div>
                 </form>
             </div>
@@ -110,14 +136,14 @@ export function Login({ login }) {
                 <br/>
                 <input placeholder="Password" id="password" />
                 <br/>
-                <button onClick={performLogin} type="button" className="btn btn-black border-primary">Login</button>
+                <button onClick={performLogin} type="button" className="btn btn-black btnBorder">Login</button>
             </form>
             
             <br/>
             <hr/>
             <h2>Don't have an account?</h2>
             <Link to={"/sign-up"}>
-                <button type="button" className="btn btn-black border-primary">Sign Up</button>
+                <button type="button" className="btn btn-black btnBorder">Sign Up</button>
                 </Link>
             <hr/>
         </div>
@@ -147,7 +173,7 @@ export function Signup({signup}) {
                 <br/>
                 <input placeholder="Password Checked" id="passwordCheck" />
                 <br/>
-                <button onClick={performSignup} type="button" className="btn btn-black border-primary">Signup</button>
+                <button onClick={performSignup} type="button" className="btn btn-black btnBorder">Signup</button>
             </form>
         </div>
     )
@@ -158,7 +184,6 @@ export function LoggedIn({username}) {
 
 const  token = apiFacade.getToken();
 const  decoded = jwt_decode(token); // jwt_decode is an external library
-console.log(decoded);
     return (
         <div>
             <h2>You are now logged in!</h2>

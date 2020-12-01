@@ -95,7 +95,7 @@ function App() {
             {!loggedIn ? (<Login login={login} />) :
             (<div>
               <LoggedIn username={username}/>
-              <button onClick={logout}>Logout</button>
+              <button onClick={logout} className="btn btn-black btnBorder">Logout</button>
             </div>)}
             {error}
           </div>

@@ -1,4 +1,4 @@
-import URLS, {servicepointsURL, movieReviewURL, digitaloceanURL, loginURL, signUpURL} from './Settings';
+import URLS, {servicepointsURL, movieReviewURL, digitaloceanURL, loginURL, signUpURL, songLookupURL, songBookmarkURL} from './Settings';
 
 function getServicePoints(address) {
     const options = makeOptions("POST", true, address);
@@ -16,7 +16,19 @@ function getMovieReviews(query) {
 function getDigitalOceanInfo() {
     const options = makeOptions("GET", true);
     return fetch (digitaloceanURL, options)
-    .then(handleHttpErrors);
+        .then(handleHttpErrors);
+}
+
+function getSongInformation(songInput) {
+    const options = makeOptions("POST", true, songInput);
+    return fetch(songLookupURL, options)
+        .then(handleHttpErrors);
+}
+
+function bookmarkSong(songInformation) {
+    const options = makeOptions("POST", true, songInformation);
+    return fetch(songBookmarkURL, options)
+        .then(handleHttpErrors);
 }
 
 const setToken = (token) => {
@@ -50,6 +62,8 @@ const apiFacade = {
     getServicePoints,
     getMovieReviews,
     getDigitalOceanInfo,
+    getSongInformation,
+    bookmarkSong,
     setToken,
     getToken,
     loggedIn,
