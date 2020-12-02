@@ -4,6 +4,8 @@ import apiFacade from './apiFacade';
 import Table from 'react-bootstrap/Table';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import jwt_decode from "jwt-decode";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
 
 
 export function Home() {
@@ -62,13 +64,32 @@ export function SongLookup() {
 
     const init = { song: "", artist: "" };
     const [search, setSearch] = useState(init);
-    const [data, setData] = useState({});
+    const [itunes, setItunes] = useState([]);
+    const [lyrics, setLyrics] = useState('');
+    const [similar, setSimilar] = useState({});
+
+    const printItunes = itunes.map((song, index) => (
+        <div key={index}>
+            <p>Song Name: {song.trackName}</p>
+            <p>Artist Name: {song.artistName}</p>
+            <p>Release Date: {song.releaseDate}</p>
+            <p>Price: {song.trackPrice}</p>
+            <p>Country: {song.country}</p>
+            <p>Currency: {song.currency}</p>
+            <p>Collection Name: {song.collectionName}</p>
+            <hr/>
+        </div>
+    ))
+
+    const printLyrics = lyrics;
 
     function handleSubmit(event) {
         event.preventDefault();
         apiFacade.getSongInformation(search)
         .then(data => {
-            setData(data);
+            setLyrics(data.lyrics.lyrics);
+            setItunes(data.itunes.results);
+            setSimilar(data.similar.Similar);
         })
     }
 
@@ -76,13 +97,12 @@ export function SongLookup() {
         setSearch({...search, [event.target.id]: event.target.value});
     };
 
-    
     return (
         <div>
             <h2>Song Lookup</h2>
             <hr/>
             <div className="wrapper">
-                <form onChange={handleChange} onSubmit={handleSubmit}>
+                <form onChange={handleChange}>
                     <div className="row">
                         <div className="one">
                             <p>Song title</p>
@@ -94,14 +114,37 @@ export function SongLookup() {
                         </div>
                     </div>
                     <div className="one">
-                        <button type="submit" className="btn btn-black btnBorder">Go!</button>
+                        <button type="button" onClick={handleSubmit} className="btn btn-black btnBorder">Go!</button>
                     </div>
                 </form>
             </div>
                 
             <hr/>
             <h3>Information received goes here...</h3>
-            { JSON.stringify(data, null, 2) }
+
+            <Tabs>
+                <TabList>
+                    <Tab>iTunes Price</Tab>
+                    <Tab>Song Lyrics</Tab>
+                    <Tab>Similar Artist</Tab>
+                </TabList>
+
+                <TabPanel>
+                    <div>
+                        {printItunes}
+                    </div>
+                </TabPanel>
+                <TabPanel>
+                    <div>
+                        {printLyrics}
+                    </div>
+                </TabPanel>
+                <TabPanel>
+                    <div>
+                        {similar}
+                    </div>
+                </TabPanel>
+            </Tabs>
         </div>
     )
 }
@@ -134,7 +177,7 @@ export function Login({ login }) {
             <h2>Don't have an account?</h2>
             <Link to={"/sign-up"}>
                 <button type="button" className="btn btn-black btnBorder">Sign Up</button>
-                </Link>
+            </Link>
             <hr/>
         </div>
     )
@@ -184,7 +227,6 @@ const  decoded = jwt_decode(token); // jwt_decode is an external library
 
 export function DigitalOcean() {
 
-    const [string, setString] = useState('');
     const [droplets, setDroplets] = useState([]);
     const display = droplets.map((droplet, index) => {
         const network = droplet.networks.v4[0];
@@ -233,7 +275,7 @@ export function DigitalOcean() {
     useEffect (() => {
                apiFacade.getDigitalOceanInfo()
                .then(data => setDroplets(data.droplets))
-    }, [string])
+    }, [])
 
 
     return (
