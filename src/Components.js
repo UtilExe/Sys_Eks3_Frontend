@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import jwt_decode from "jwt-decode";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import Pagination from 'react-paginate';
 
 
 export function Home() {
@@ -69,9 +70,29 @@ export function MySongs(){
 }
 
 export function AdminPage(){
+    
+    const [users, setUsers] = useState([]);
+
+    function handleSubmit(event) {
+        event.preventDefault();
+        apiFacade.getAllUsers()
+        .then(array => {
+           console.log(array)
+           setUsers(array)
+        })
+    }
+
+    const displayUsers = users.map((user) => (
+        <li key={user}>Username: {user.username}</li>
+
+    ))
+
     return (
         <div>
-            <p>admin page</p>
+            <h2> All Users</h2>
+             <button className="btn btn-black btnBorder" onClick={handleSubmit}>Get Users</button>
+             <p>{displayUsers}</p>
+             <Pagination count={10} />
         </div>
     )
 }
@@ -88,7 +109,7 @@ export function BookmarkSong({trackName, artistName, releaseDate, collectionName
 
     return (
         <div>
-            <button className="btn btn-black btnBorder" onClick={bookmarkSong}>Save Song</button>
+            <button className="btn btn-black btnBorder" onClick={bookmarkSong}>Load</button>
         </div>
     )
 }
@@ -133,7 +154,7 @@ export function SongLookup({bookmark}) {
         .then(data => {
             setLyrics(data.lyrics.lyrics);
             setItunes(data.itunes.results);
-            //setSimilar(data.similar.Similar.Results);
+            setSimilar(data.similar.Similar.Results);
         })
     }
 
