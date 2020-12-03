@@ -93,6 +93,9 @@ export function SongLookup() {
         })
     }
 
+    console.log(similar)
+    const printSimiliar = similar.Info;
+
     function handleChange(event) {
         setSearch({...search, [event.target.id]: event.target.value});
     };
@@ -141,7 +144,7 @@ export function SongLookup() {
                 </TabPanel>
                 <TabPanel>
                     <div>
-                        {similar}
+                        {JSON.stringify(printSimiliar)}
                     </div>
                 </TabPanel>
             </Tabs>
