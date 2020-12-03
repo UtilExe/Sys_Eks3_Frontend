@@ -66,17 +66,28 @@ export function SongLookup() {
     const [search, setSearch] = useState(init);
     const [itunes, setItunes] = useState([]);
     const [lyrics, setLyrics] = useState('');
-    const [similar, setSimilar] = useState({});
+    const [similar, setSimilar] = useState([]);
 
     const printItunes = itunes.map((song, index) => (
         <div key={index}>
-            <p>Song Name: {song.trackName}</p>
-            <p>Artist Name: {song.artistName}</p>
-            <p>Release Date: {song.releaseDate}</p>
-            <p>Price: {song.trackPrice}</p>
-            <p>Country: {song.country}</p>
-            <p>Currency: {song.currency}</p>
-            <p>Collection Name: {song.collectionName}</p>
+            <p><b>Song Name:</b> {song.trackName}</p>
+            <p><b>Artist Name:</b> {song.artistName}</p>
+            <p><b>Release Date:</b> {song.releaseDate}</p>
+            <p><b>Price:</b> {song.trackPrice}</p>
+            <p><b>Country:</b> {song.country}</p>
+            <p><b>Currency:</b> {song.currency}</p>
+            <p><b>Collection Name:</b> {song.collectionName}</p>
+            <hr/>
+        </div>
+    ))
+
+    console.log(similar)
+    const similarArtistData = similar.map((song, index) => (
+        <div key={index}>
+            <p><b>Similar artist:</b> {song.Name}</p>
+            <p><b>Teaser:</b> {song.wTeaser}</p>
+            <p><b>Wikipedia URL:</b> {song.wUrl}</p>
+           
             <hr/>
         </div>
     ))
@@ -89,11 +100,11 @@ export function SongLookup() {
         .then(data => {
             setLyrics(data.lyrics.lyrics);
             setItunes(data.itunes.results);
-            setSimilar(data.similar.Similar);
+            setSimilar(data.similar.Similar.Results);
         })
     }
 
-    console.log(similar)
+    console.log("test", similar)
     const printSimiliar = similar.Info;
 
     function handleChange(event) {
@@ -144,7 +155,7 @@ export function SongLookup() {
                 </TabPanel>
                 <TabPanel>
                     <div>
-                        {JSON.stringify(printSimiliar)}
+                        {similarArtistData}
                     </div>
                 </TabPanel>
             </Tabs>
