@@ -76,7 +76,24 @@ export function AdminPage(){
     )
 }
 
-export function SongLookup() {
+export function BookmarkSong({trackName, artistName, releaseDate, collectionName, bookmark}) {
+    const song = trackName;
+    const artist = artistName;
+    const album = collectionName;
+
+    function bookmarkSong(event) {
+        event.preventDefault();
+        bookmark(song, artist, album);
+    }
+
+    return (
+        <div>
+            <button className="btn btn-black btnBorder" onClick={bookmarkSong}>Save Song</button>
+        </div>
+    )
+}
+
+export function SongLookup({bookmark}) {
 
     const init = { song: "", artist: "" };
     const [search, setSearch] = useState(init);
@@ -94,10 +111,10 @@ export function SongLookup() {
             <p><b>Currency:</b> {song.currency}</p>
             <p><b>Collection Name:</b> {song.collectionName}</p>
             <hr/>
+            <BookmarkSong bookmark={bookmark} trackName={song.trackName} artistName={song.artistName} releaseDate={song.releaseDate} collectionName={song.collectionName} />
         </div>
     ))
 
-    console.log(similar)
     const similarArtistData = similar.map((song, index) => (
         <div key={index}>
             <p><b>Similar artist:</b> {song.Name}</p>
@@ -116,12 +133,9 @@ export function SongLookup() {
         .then(data => {
             setLyrics(data.lyrics.lyrics);
             setItunes(data.itunes.results);
-            setSimilar(data.similar.Similar.Results);
+            //setSimilar(data.similar.Similar.Results);
         })
     }
-
-    console.log("test", similar)
-    const printSimiliar = similar.Info;
 
     function handleChange(event) {
         setSearch({...search, [event.target.id]: event.target.value});

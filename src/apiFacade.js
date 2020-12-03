@@ -25,8 +25,8 @@ function getSongInformation(songInput) {
         .then(handleHttpErrors);
 }
 
-function bookmarkSong(songInformation) {
-    const options = makeOptions("POST", true, songInformation);
+function bookmarkSong(song, artist, album) {
+    const options = makeOptions("POST", true, {song: song, artist: artist, album: album});
     return fetch(songBookmarkURL, options)
         .then(handleHttpErrors);
 }

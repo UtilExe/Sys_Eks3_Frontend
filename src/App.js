@@ -61,6 +61,16 @@ function App() {
       })
   }
 
+  const bookmark = (name, artist, album) => {
+    apiFacade.bookmarkSong(name, artist, album)
+      .then(res => {
+        console.log("Song successfully saved!")
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
   return (
     <Router>
       <div>
@@ -73,7 +83,7 @@ function App() {
             <Home />
           </Route>
           <Route path="/song-lookup">
-            <SongLookup />
+            <SongLookup bookmark={bookmark} />
           </Route>
           <Route path="/my-songs">
             <MySongs />
