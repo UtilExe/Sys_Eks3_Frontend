@@ -16,10 +16,9 @@ import {
   Login,
   Signup,
   LoggedIn,
-  Address,
-  Movies,
-  DigitalOcean,
-  SongLookup
+  SongLookup,
+  MySongs,
+  AdminPage
 } from './Components';
 import apiFacade from './apiFacade';
 
@@ -76,20 +75,17 @@ function App() {
           <Route path="/song-lookup">
             <SongLookup />
           </Route>
-          <Route path="/address-info">
-           <Address />
-           </Route>
+          <Route path="/my-songs">
+            <MySongs />
+          </Route>
+          <Route path="/admin-page">
+            <AdminPage />
+          </Route>
           <Route path="/sign-up">
            <Signup signup={signup} />
            <br/>
           {signUpMsg}
            </Route>
-          <Route path="/movie-reviews">
-           <Movies />
-          </Route>
-          <Route path ="/digitalocean-info">
-            <DigitalOcean />
-          </Route>
           <Route path="/login-out">
           <div>
             {!loggedIn ? (<Login login={login} />) :
@@ -112,13 +108,13 @@ function Header({ isLoggedIn, loginMsg }) {
   return (
     <ul className="header">
       <li><NavLink exact activeClassName="active" to="/">Home</NavLink></li>
-      <li><NavLink activeClassName="active" to="/song-lookup">Song Lookup</NavLink></li>
       {
         isLoggedIn &&
         (
           <React.Fragment>
-            <li><NavLink activeClassName="active" to="/movie-reviews">Movies</NavLink></li>
-            <li><NavLink activeClassName="active" to="/digitalocean-info">Digital Ocean Info</NavLink></li>
+            <li><NavLink activeClassName="active" to="/song-lookup">Song Lookup</NavLink></li>
+            <li><NavLink exact activeClassName="active" to="/my-songs">My Songs</NavLink></li>
+            <li><NavLink exact activeClassName="active" to="/admin-page">Admin Page</NavLink></li>
           </React.Fragment>
         )
       }

@@ -60,6 +60,22 @@ export function Home() {
     );
 }
 
+export function MySongs(){
+    return (
+        <div>
+            <p>halløj</p>
+        </div>
+    )
+}
+
+export function AdminPage(){
+    return (
+        <div>
+            <p>admin page</p>
+        </div>
+    )
+}
+
 export function SongLookup() {
 
     const init = { song: "", artist: "" };
@@ -239,204 +255,6 @@ const  decoded = jwt_decode(token); // jwt_decode is an external library
     )
 }
 
-export function DigitalOcean() {
-
-    const [droplets, setDroplets] = useState([]);
-    const display = droplets.map((droplet, index) => {
-        const network = droplet.networks.v4[0];
-        return (
-            <React.Fragment>
-                <tr>
-                    <th>Droplet Name</th>
-                    <td>{droplet.name}</td>
-                </tr>
-                <tr>
-                    <th>Created At</th>
-                    <td>{droplet.created_at}</td>
-                </tr>
-                <tr>
-                    <th>Memory</th>
-                    <td>{droplet.memory} MB</td>
-                </tr>
-                <tr>
-                    <th>Status</th>
-                    <td>{droplet.status}</td>
-                </tr>
-                <tr>
-                    <th>Location</th>
-                    <td>{droplet.region.name}</td>
-                </tr>
-                <tr>
-                    <th>Monthly price</th>
-                    <td>${droplet.size.price_monthly}</td>
-                </tr>
-                <tr>
-                    <th>Gateway</th>
-                    <td>{network.gateway}</td>
-                </tr>
-                <tr>
-                    <th>IP Address</th>
-                    <td>{network.ip_address}</td>
-                </tr>
-                <tr>
-                    <th>Netmask</th>
-                    <td>{network.netmask}</td>
-                </tr>
-            </React.Fragment>
-        )
-    })
-    
-    useEffect (() => {
-               apiFacade.getDigitalOceanInfo()
-               .then(data => setDroplets(data.droplets))
-    }, [])
-
-
-    return (
-        <div>
-            <Table striped bordered hover>
-                {display}
-            </Table>
-        </div>
-    )
-}
-
-export function Movies() {
-
-    const [movieSearchWord, setMovieSearchWord] = useState("");
-    const [movieArray, setMovieArray] = useState([]);
-
-    const handleSubmit = event => {
-        event.preventDefault();
-        apiFacade.getMovieReviews(movieSearchWord)
-        .then(data => {
-            const array = data.results;
-            setMovieArray(array);
-        })
-      };
-
-
-      const allMovies = movieArray.map((movie, index)=> (
-        <div>
-            <ul key={index+1}>
-                <li>{movie.display_title} - <a href={movie.link.url}>Details</a></li>
-                <p>Review Summary: {movie.summary_short}</p>
-            </ul>
-            <hr></hr>
-        </div>
-        )
-    );
-
-    return (
-        <div>
-            <div>
-                <input placeholder="Enter movie title" onChange={(event) => setMovieSearchWord(event.target.value)}/>
-                <button onClick={handleSubmit}>Submit</button>
-            </div>
-            <br></br>
-            <div>
-                {allMovies}
-            </div>
-        </div>
-    );
-}
-
-export function Address() {
-    const initialWeather = {
-        Sunrise: "",
-        Sunset: "",
-        Datetime: "",
-        Cityname: "",
-        Temperature: "",
-        ApparentTemperature: "",
-        Description: ""
-      }
-      const [weather, setWeather] = useState(initialWeather);
-    
-      const initialValue = {
-        city: "",
-        postalCode: "",
-        streetName: "",
-        streetNumber: ""
-      }
-    
-      const [address, setAddress] = useState(initialValue);
-      const [servicePoints, setServicePoints] = useState([]);
-      let [isBlocking, setIsBlocking] = useState(false);
-    
-      const handleChange = event => {
-        const { id, value } = event.target;
-        setIsBlocking(event.target.value.length > 0);
-        setAddress({ ...address, [id]: value })
-      };
-    
-      const handleSubmit = event => {
-        event.preventDefault();
-        apiFacade.getServicePoints(address)
-        .then(data => {
-          const temp = data.weather.data[0];
-          setServicePoints(data.postnord.servicePointInformationResponse.servicePoints);
-          setWeather({
-            Sunrise: temp.sunrise,
-            Sunset: temp.sunset,
-            Datetime: temp.datetime,
-            Cityname: temp.city_name,
-            Temperature: temp.temp,
-            ApparentTemperature: temp.app_temp,
-            Description: temp.weather.description
-          })
-        })
-      };
-
-      return (
-          <div>
-            <AddressInfo isBlocking={isBlocking} handleChange={handleChange} handleSubmit={handleSubmit} servicePoints={servicePoints} />
-            <WeatherInfo weather={weather} />
-          </div>
-      )
-}
-
-export function AddressInfo({isBlocking, handleChange, handleSubmit, servicePoints }) {
-    
-
-    const allServicePoints = servicePoints.map(servicePoint => (
-        <ul key={servicePoint.servicePointId}>
-            <li>{servicePoint.servicePointId}</li>
-            <li>{servicePoint.name}</li>
-        </ul>
-        )
-    );
-
-    return (
-        <div>
-            <h2>What's the address?</h2>
-            <div>
-                <form onChange={handleChange}>
-                    <Prompt when={isBlocking} message={() => "You have unsaved data. Press \"Cancel\" to keep your changes."} />
-                    <input type="text" id="city" placeholder="City..." />
-                    <br></br>
-                    <input type="text" id="postalCode" placeholder="Zip..." />
-                    <br></br>
-                    <input type="text" id="streetName" placeholder="Street..." />
-                    <br></br>
-                    <input type="text" id="streetNumber" placeholder="Street number..." />
-                    <br></br>
-                    <input type="submit" value="Enter" onClick={handleSubmit} />
-                </form>
-            </div>
-            {allServicePoints}
-        </div>
-    );
-}
-
-export function WeatherInfo({ weather }) {
-    return (
-        <div>
-            <h2>Weather goes here</h2>
-            <Log value={weather} />
-        </div>
-    )
-}
 
 const Log = ({ value, replacer = null, space = 2 }) => (
     <pre>
