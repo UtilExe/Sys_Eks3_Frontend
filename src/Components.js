@@ -83,23 +83,22 @@ export function AdminPage(){
 
     function handleDelete(username) {
         apiFacade.deleteUser(username)
-        .then(updateUsers());
+        .then(updateUsers);
     }
 
     function updateUsers() {
         apiFacade.getAllUsers()
         .then(array => {
            setUsers(array)
-           
         })
     }
     
-    var displayUsers = users.map((user) => (
+
+    let displayUsers = users.map((user) => (
         <li key={user.username}>Username: {user.username} <br/>
         <button className="btn btn-black btnBorder" onClick={() => handleDelete(user.username)}>Delete</button></li>
-
-    )) 
-
+    ))
+    
     return (
         <div>
             <h2> All Users</h2>
