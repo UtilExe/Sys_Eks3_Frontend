@@ -65,6 +65,7 @@ export function SavedSongs({savedSongs}) {
 
     const { song, artist, album } = savedSongs;
     const [songs, setSongs] = useState([]);
+    const [error, setError] = useState('');
 
 
     function handleSubmit(event) {
@@ -73,6 +74,11 @@ export function SavedSongs({savedSongs}) {
         .then(array => {
             setSongs(array)
         })
+        .catch(err => {
+            Promise.resolve(err.fullError).then(function(value) {
+                setError(value.message);
+              })
+          })
     }
 
     let displaySongs = songs.map((songA) => (
@@ -89,7 +95,8 @@ export function SavedSongs({savedSongs}) {
              <button className="btn btn-black btnBorder" onClick={handleSubmit}>Get Songs</button>
              <br/>
              <br/>
-             <p>{displaySongs}</p>
+             {displaySongs}
+             {error}
         </div>
     )
 }
@@ -145,7 +152,7 @@ export function BookmarkSong({trackName, artistName, releaseDate, collectionName
 
     return (
         <div>
-            <button className="btn btn-black btnBorder" onClick={bookmarkSong}>Load</button>
+            <button className="btn btn-black btnBorder" onClick={bookmarkSong}>Save Song</button>
         </div>
     )
 }
