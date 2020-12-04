@@ -1,4 +1,4 @@
-const mainURL = "http://localhost:8080/SYS_EKS3/api/";
+const mainURL = "https://work.emucoach.com/SYS_EKS3/api/";
 export const servicepointsURL = mainURL + "servicepoints/servicepoints";
 export const movieReviewURL = mainURL + "movie/review";
 export const digitaloceanURL = mainURL + "digitalocean/admin";
