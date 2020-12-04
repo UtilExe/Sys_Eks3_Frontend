@@ -17,8 +17,8 @@ import {
   Signup,
   LoggedIn,
   SongLookup,
-  MySongs,
-  AdminPage
+  AdminPage,
+  SavedSongs
 } from './Components';
 import apiFacade from './apiFacade';
 
@@ -27,6 +27,7 @@ function App() {
   const [error, setError] = useState('');
   const [username, setUserName] = useState("");
   const [signUpMsg, setSignUpMsg] = useState("");
+  const [savedSongs, setSavedSongs] = useState([]);
 
   const logout = () => {
     apiFacade.logout()
@@ -64,7 +65,8 @@ function App() {
   const bookmark = (name, artist, album) => {
     apiFacade.bookmarkSong(name, artist, album)
       .then(res => {
-        console.log("Song successfully saved!")
+        setSavedSongs(res);
+        console.log("Song successfully saved!", res)
       })
       .catch(err => {
         console.log(err);
@@ -85,11 +87,11 @@ function App() {
           <Route path="/song-lookup">
             <SongLookup bookmark={bookmark} />
           </Route>
-          <Route path="/my-songs">
-            <MySongs />
-          </Route>
           <Route path="/admin-page">
             <AdminPage />
+          </Route>
+          <Route path="/my-songs">
+            <SavedSongs savedSongs={savedSongs} />
           </Route>
           <Route path="/sign-up">
            <Signup signup={signup} />

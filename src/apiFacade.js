@@ -1,4 +1,4 @@
-import URLS, {servicepointsURL, movieReviewURL, digitaloceanURL, loginURL, signUpURL, songLookupURL, songBookmarkURL, getUsersURL, deleteUsersURL} from './Settings';
+import URLS, {servicepointsURL, movieReviewURL, digitaloceanURL, loginURL, signUpURL, songLookupURL, songBookmarkURL, getUsersURL, deleteUsersURL, getSongURL} from './Settings';
 
 function getServicePoints(address) {
     const options = makeOptions("POST", true, address);
@@ -43,6 +43,12 @@ function getAllUsers() {
     .then(handleHttpErrors);
 }
 
+function getAllSongs() {
+    const options = makeOptions("GET", true);
+    return fetch (getSongURL, options)
+    .then(handleHttpErrors);
+}
+
 const setToken = (token) => {
     localStorage.setItem('jwtToken', token)
 }
@@ -83,7 +89,8 @@ const apiFacade = {
     login,
     signup,
     getAllUsers,
-    deleteUser
+    deleteUser,
+    getAllSongs
 }
 
 function makeOptions(method, addToken, body) {

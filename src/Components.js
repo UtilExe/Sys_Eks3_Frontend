@@ -61,10 +61,35 @@ export function Home() {
     );
 }
 
-export function MySongs(){
-    return (
-        <div>
-            <p>halløj</p>
+export function SavedSongs({savedSongs}) {
+
+    const { song, artist, album } = savedSongs;
+    const [songs, setSongs] = useState([]);
+
+
+    function handleSubmit(event) {
+        event.preventDefault();
+        apiFacade.getAllSongs()
+        .then(array => {
+            setSongs(array)
+        })
+    }
+
+    let displaySongs = songs.map((songA) => (
+        <ul key={songA.song}>
+        <li> Song: {songA.song} </li>
+        <li> Artist: {songA.artist} </li>
+        <li> Album: {songA.album} </li>
+       </ul>
+    ))
+
+        return (
+           <div>
+            <h2> All Songs</h2>
+             <button className="btn btn-black btnBorder" onClick={handleSubmit}>Get Songs</button>
+             <br/>
+             <br/>
+             <p>{displaySongs}</p>
         </div>
     )
 }
@@ -92,7 +117,6 @@ export function AdminPage(){
            setUsers(array)
         })
     }
-    
 
     let displayUsers = users.map((user) => (
         <li key={user.username}>Username: {user.username} <br/>

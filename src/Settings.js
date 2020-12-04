@@ -8,3 +8,4 @@ export const loginURL = mainURL + "login";
 export const signUpURL = mainURL + "register";
 export const getUsersURL = mainURL + "admin/all";
 export const deleteUsersURL = mainURL + "admin/delete";
+export const getSongURL = mainURL + "song/user/all";
