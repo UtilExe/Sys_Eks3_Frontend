@@ -82,15 +82,15 @@ export function AdminPage(){
     }
 
     function handleDelete(username) {
-        apiFacade.deleteUser(username);
-        apiFacade.getAllUsers()
-        .then(data => setUsers(data))
+        apiFacade.deleteUser(username)
+        .then(updateUsers());
     }
 
-     function updateUsers() {
+    function updateUsers() {
         apiFacade.getAllUsers()
         .then(array => {
            setUsers(array)
+           
         })
     }
     
@@ -99,19 +99,6 @@ export function AdminPage(){
         <button className="btn btn-black btnBorder" onClick={() => handleDelete(user.username)}>Delete</button></li>
 
     )) 
-
-    useEffect(() => {
-        displayUsers = tdisplayUsers();
-    }, [users])
-
-    function tdisplayUsers() {
-        return (
-            users.map((user) => (
-            <li key={user.username}>Username: {user.username} <br/>
-            <button className="btn btn-black btnBorder" onClick={() => handleDelete(user.username)}>Delete</button></li>
-        )))
-    }
-
 
     return (
         <div>
