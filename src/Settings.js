@@ -7,3 +7,4 @@ export const songBookmarkURL = mainURL + "song/bookmark";
 export const loginURL = mainURL + "login";
 export const signUpURL = mainURL + "register";
 export const getUsersURL = mainURL + "admin/all";
+export const deleteUsersURL = mainURL + "admin/delete";

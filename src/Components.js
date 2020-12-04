@@ -77,15 +77,41 @@ export function AdminPage(){
         event.preventDefault();
         apiFacade.getAllUsers()
         .then(array => {
-           console.log(array)
            setUsers(array)
         })
     }
 
-    const displayUsers = users.map((user) => (
-        <li key={user}>Username: {user.username}</li>
+    function handleDelete(username) {
+        apiFacade.deleteUser(username);
+        apiFacade.getAllUsers()
+        .then(data => setUsers(data))
+    }
 
-    ))
+     function updateUsers() {
+        apiFacade.getAllUsers()
+        .then(array => {
+           setUsers(array)
+        })
+    }
+    
+    var displayUsers = users.map((user) => (
+        <li key={user.username}>Username: {user.username} <br/>
+        <button className="btn btn-black btnBorder" onClick={() => handleDelete(user.username)}>Delete</button></li>
+
+    )) 
+
+    useEffect(() => {
+        displayUsers = tdisplayUsers();
+    }, [users])
+
+    function tdisplayUsers() {
+        return (
+            users.map((user) => (
+            <li key={user.username}>Username: {user.username} <br/>
+            <button className="btn btn-black btnBorder" onClick={() => handleDelete(user.username)}>Delete</button></li>
+        )))
+    }
+
 
     return (
         <div>
