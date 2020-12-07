@@ -7,6 +7,9 @@ import jwt_decode from "jwt-decode";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import Pagination from 'react-paginate';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 
 
 export function Home() {
@@ -206,7 +209,7 @@ export function SongLookup({bookmark}) {
     };
 
     return (
-        <div>
+        /* <div>
             <h2>Song Lookup</h2>
             <hr/>
             <div className="wrapper">
@@ -221,39 +224,72 @@ export function SongLookup({bookmark}) {
                             <input placeholder="Song artist..." id="artist" />
                         </div>
                     </div>
-                    <div className="one">
-                        <button type="button" onClick={handleSubmit} className="btn btn-black btnBorder">Go!</button>
-                    </div>
-                </form>
-            </div>
-                
-            <hr/>
-            <h3>Information received goes here...</h3>
+                <div className="one">
+                    <button type="button" onClick={handleSubmit} className="btn btn-black btnBorder">Go!</button>
+                </div>
+            </form>
+        </div> */
 
-            <Tabs>
-                <TabList>
-                    <Tab>iTunes Price</Tab>
-                    <Tab>Song Lyrics</Tab>
-                    <Tab>Similar Artist</Tab>
-                </TabList>
+        <React.Fragment>
+            <CssBaseline />
+            <Container maxWidth="lg">
+                <div>
+                    <h2>Song Lookup</h2>
+                    <hr/>
+                    <form onChange={handleChange}>
+                        
+                        <div>
+                            <Grid container spacing={3}>
+                                <Grid item xs={2}>
+                                    <p>Song title</p>
+                                    <input placeholder="Song title..." id="song" />
+                                </Grid>
+                            
+                                <Grid item xs={2}>
+                                    <p>Song artist</p>
+                                    <input placeholder="Song artist..." id="artist" />
+                                </Grid>
 
-                <TabPanel>
-                    <div>
-                        {printItunes}
-                    </div>
-                </TabPanel>
-                <TabPanel>
-                    <div>
-                        {printLyrics}
-                    </div>
-                </TabPanel>
-                <TabPanel>
-                    <div>
-                        {similarArtistData}
-                    </div>
-                </TabPanel>
-            </Tabs>
-        </div>
+                                <Grid item xs={8}></Grid>
+
+                            </Grid>
+
+                            <button type="button" onClick={handleSubmit} className="btn btn-black btnBorder">Go!</button>
+                        </div>
+
+                    </form>
+                </div>
+                    
+                <div>
+                    <hr/>
+                    <h3>Information received goes here...</h3>
+
+                    <Tabs>
+                        <TabList>
+                            <Tab>iTunes Price</Tab>
+                            <Tab>Song Lyrics</Tab>
+                            <Tab>Similar Artist</Tab>
+                        </TabList>
+
+                        <TabPanel>
+                            <div>
+                                {printItunes}
+                            </div>
+                        </TabPanel>
+                        <TabPanel>
+                            <div>
+                                {printLyrics}
+                            </div>
+                        </TabPanel>
+                        <TabPanel>
+                            <div>
+                                {similarArtistData}
+                            </div>
+                        </TabPanel>
+                    </Tabs>
+                </div>
+            </Container>
+        </React.Fragment>
     )
 }
 

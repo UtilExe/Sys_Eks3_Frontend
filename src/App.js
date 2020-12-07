@@ -21,7 +21,8 @@ import {
   SavedSongs
 } from './Components';
 import apiFacade from './apiFacade';
-import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Container from '@material-ui/core/Container';
 
 
 function App() {
@@ -76,45 +77,57 @@ function App() {
   }
 
   return (
-    <Router>
-      <div>
-        <Header
-          loginMsg={loggedIn ? "Logout" : "Login"}
-          isLoggedIn={loggedIn}
-        />
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/song-lookup">
-            <SongLookup bookmark={bookmark} />
-          </Route>
-          <Route path="/admin-page">
-            <AdminPage />
-          </Route>
-          <Route path="/my-songs">
-            <SavedSongs savedSongs={savedSongs} />
-          </Route>
-          <Route path="/sign-up">
-           <Signup signup={signup} />
-           <br/>
-          {signUpMsg}
-           </Route>
-          <Route path="/login-out">
+    <React.Fragment>
+      <CssBaseline />
+      <Container maxWidth="lg">
+        <Router>
           <div>
-            {!loggedIn ? (<Login login={login} />) :
-            (<div>
-              <LoggedIn username={username}/>
-              <button onClick={logout} className="btn btn-black btnBorder">Logout</button>
-            </div>)}
-            {error}
+            <Header
+              loginMsg={loggedIn ? "Logout" : "Login"}
+              isLoggedIn={loggedIn}
+            />
+            <Switch>
+
+              <Route exact path="/">
+                <Home />
+              </Route>
+
+              <Route path="/song-lookup">
+                <SongLookup bookmark={bookmark} />
+              </Route>
+
+              <Route path="/admin-page">
+                <AdminPage />
+              </Route>
+
+              <Route path="/my-songs">
+                <SavedSongs savedSongs={savedSongs} />
+              </Route>
+
+              <Route path="/sign-up">
+                <Signup signup={signup} />
+                <br/>
+                {signUpMsg}
+              </Route>
+
+              <Route path="/login-out">
+                <div>
+                  {!loggedIn ? (<Login login={login} />) :
+                  (<div>
+                    <LoggedIn username={username}/>
+                    <button onClick={logout} className="btn btn-black btnBorder">Logout</button>
+                  </div>)}
+                  {error}
+                </div>
+              </Route>
+
+              <Route component={NoMatch}></Route>
+
+            </Switch>
           </div>
-         
-          </Route>
-          <Route component={NoMatch}></Route>
-        </Switch>
-      </div>
-    </Router>
+        </Router>
+      </Container>
+    </React.Fragment>
   );
 }
 
