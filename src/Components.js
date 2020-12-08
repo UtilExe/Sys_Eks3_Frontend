@@ -12,8 +12,6 @@ import AudiotrackIcon from '@material-ui/icons/Audiotrack';
 import AlbumIcon from '@material-ui/icons/Album';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 import Users from './Test/Users';
-
-
 import Modal from 'react-modal';
 
 export function Home() {
@@ -101,7 +99,7 @@ export function AdminPage() {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const [usersPerPage, setUsersPerPage] = useState(10);
+    const [usersPerPage, setUsersPerPage] = useState(5);
 
 
     function handleSubmit(event) {
