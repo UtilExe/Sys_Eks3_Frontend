@@ -13,6 +13,7 @@ import AlbumIcon from '@material-ui/icons/Album';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 import { Container, Divider } from 'semantic-ui-react'
 
+
 import Modal from 'react-modal';
 
 export function Home() {
@@ -237,10 +238,10 @@ export function AdminPage() {
             <h2> All Users</h2>
             <hr className="ownHr"/>
             <button className="btn btn-black btnBorder" onClick={handleSubmit}>Get Users</button> <br/> <br/>
-            <p>{displayUsers}</p>
-            <p >{editStyleColor}</p>
+            {displayUsers}
             <hr className="ownHr"/>
-            <Pagination count={10} />
+            {editStyleColor}
+            <Pagination count={10} variant="outlined" />
             {modalShow()}
         </div>
     )
