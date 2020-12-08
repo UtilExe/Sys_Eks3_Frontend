@@ -11,6 +11,7 @@ import Grid from '@material-ui/core/Grid';
 import AudiotrackIcon from '@material-ui/icons/Audiotrack';
 import AlbumIcon from '@material-ui/icons/Album';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
+import { Container, Divider } from 'semantic-ui-react'
 
 import Modal from 'react-modal';
 
@@ -145,11 +146,16 @@ export function AdminPage() {
     }
 
     let displayUsers = users.map((user) => (
-        <li key={user.username}>Username: {user.username} <br />
-            <button className="btn btn-black btnBorder" onClick={() => handleDelete(user.username)}>Delete</button>
-            <button className="btn btn-black btnBorder" onClick={() => openModal(user.username)}>Edit
-      </button>
+        <ul className="list-group">
+      <li className="list-group-item list-group-test">
+      <div className="btn-toolbar">
+      <ul key={user.username}>Username: {user.username} <br/>
+        <button className="btn btn-black btnBorder btn-sm mr-2" onClick={() => handleDelete(user.username)}>Delete</button> 
+         <button className="btn btn-black btnBorder btn-sm mr-2" onClick={() => openModal(user.username)}>Edit </button> 
+        </ul>
+        </div>
         </li>
+        </ul>
     ))
 
     Modal.setAppElement('#root')
@@ -229,12 +235,13 @@ export function AdminPage() {
     return (
         <div>
             <h2> All Users</h2>
-            <button className="btn btn-black btnBorder" onClick={handleSubmit}>Get Users</button>
+            <hr className="ownHr"/>
+            <button className="btn btn-black btnBorder" onClick={handleSubmit}>Get Users</button> <br/> <br/>
             <p>{displayUsers}</p>
             <p >{editStyleColor}</p>
+            <hr className="ownHr"/>
             <Pagination count={10} />
             {modalShow()}
-
         </div>
     )
 }

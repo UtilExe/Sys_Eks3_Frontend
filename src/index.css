@@ -97,3 +97,8 @@ ul.header li a:hover:not(.active) {
   background: linear-gradient(to bottom right, #4717f6, #1b17f6);
   border-radius: 20px !important;
 }
+
+.list-group-test {
+  background-color: transparent !important;
+  border-top: 1px solid #1613c3ab !important;
+  }
