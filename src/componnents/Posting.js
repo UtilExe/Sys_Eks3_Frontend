@@ -38,39 +38,20 @@ export function Posting({ posts, loading }) {
   }
 
   function handleDelete(username) {
-    updateUsers(username)
-    apiFacade.getAllUsers()
+    apiFacade.deleteUser(username)
     .then(array => {
       setUsers(array)
+      updateUsers()
   })
 
   }
 
-  function updateUsers(deletedUsername) {
-    console.log("hi")
-    let index;
-    for(var i = 0; i < totalData.length; i++) {
-      console.log("im in")
-      if(postsNew[i].username === deletedUsername) {
-        postsNew.map((user) => { 
-          if (user.username === deletedUsername) {
-       
-            console.log("inside map", user.username)
-           index = users.findIndex(x => x.username === user.username[i])
-           console.log("look", postsNew)
-        }
-        
+  function updateUsers() {
+    apiFacade.getAllUsers()
+        .then(array => {
+            setUsers(array)
         })
-        
-        console.log("index number", index)
-        setPostsNew(postsNew.splice(index, 1))
-        
-    } else {
-      console.log("didnt hit")
-    }
-  }
 }
-  
 
   /* Modal Shit */
   Modal.setAppElement('#root')
