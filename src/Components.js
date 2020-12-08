@@ -6,12 +6,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import jwt_decode from "jwt-decode";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import Pagination from 'react-paginate';
 import Grid from '@material-ui/core/Grid';
 import AudiotrackIcon from '@material-ui/icons/Audiotrack';
 import AlbumIcon from '@material-ui/icons/Album';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 import { Container, Divider } from 'semantic-ui-react'
+import axios from 'axios';
+import Posts from './componnents/Posting';
+import Pagination from './componnents/Pagination';
 
 
 import Modal from 'react-modal';
@@ -146,19 +148,6 @@ export function AdminPage() {
             })
     }
 
-    let displayUsers = users.map((user) => (
-        <ul className="list-group">
-      <li className="list-group-item list-group-test">
-      <div className="btn-toolbar">
-      <ul key={user.username}>Username: {user.username} <br/>
-        <button className="btn btn-black btnBorder btn-sm mr-2" onClick={() => handleDelete(user.username)}>Delete</button> 
-         <button className="btn btn-black btnBorder btn-sm mr-2" onClick={() => openModal(user.username)}>Edit </button> 
-        </ul>
-        </div>
-        </li>
-        </ul>
-    ))
-
     Modal.setAppElement('#root')
     const customStyles = {
         content: {
@@ -233,19 +222,48 @@ export function AdminPage() {
         )
     }
 
+    const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage] = useState(3);
+  
+    useEffect(() => {
+      const fetchPosts = async () => {
+        setLoading(true);
+        apiFacade.getAllUsers()
+        .then(array => {
+            setPosts(array)
+        })
+  
+        setLoading(false);
+      };
+  
+      fetchPosts();
+    }, []);
+  
+    // Get current posts
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  
+    // Change page
+    const paginate = pageNumber => setCurrentPage(pageNumber);
+
     return (
         <div>
             <h2> All Users</h2>
             <hr className="ownHr"/>
-            <button className="btn btn-black btnBorder" onClick={handleSubmit}>Get Users</button> <br/> <br/>
-            {displayUsers}
-            <hr className="ownHr"/>
             {editStyleColor}
-            <Pagination count={10} variant="outlined" />
+            <Posts posts={currentPosts} loading={loading} />
+            <Pagination
+        postsPerPage={postsPerPage}
+        totalPosts={posts.length}
+        paginate={paginate}/>
             {modalShow()}
         </div>
     )
 }
+
 
 export function BookmarkSong({ trackName, artistName, releaseDate, collectionName, bookmark }) {
     const song = trackName;

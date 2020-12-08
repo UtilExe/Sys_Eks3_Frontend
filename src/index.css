@@ -98,7 +98,7 @@ ul.header li a:hover:not(.active) {
   border-radius: 20px !important;
 }
 
-.list-group-test {
+.list-group-item {
   background-color: transparent !important;
   border-top: 1px solid #6f6f8673 !important;
   }
