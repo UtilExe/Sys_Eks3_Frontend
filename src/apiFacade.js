@@ -1,4 +1,4 @@
-import URLS, {servicepointsURL, movieReviewURL, digitaloceanURL, loginURL, signUpURL, songLookupURL, songBookmarkURL, getUsersURL, deleteUsersURL, getSongURL} from './Settings';
+import URLS, {servicepointsURL, movieReviewURL, digitaloceanURL, loginURL, signUpURL, songLookupURL, songBookmarkURL, getUsersURL, deleteUsersURL, getSongURL, editUserURL} from './Settings';
 
 function getServicePoints(address) {
     const options = makeOptions("POST", true, address);
@@ -35,6 +35,12 @@ function bookmarkSong(song, artist, album) {
     const options = makeOptions("POST", true, {song: song, artist: artist, album: album});
     return fetch(songBookmarkURL, options)
         .then(handleHttpErrors);
+}
+
+function editUser(username, editedPassword) {
+    const options = makeOptions("PUT", true, {username: username, editedPassword: editedPassword});
+    return fetch (editUserURL, options)
+    .then(handleHttpErrors)
 }
 
 function getAllUsers() {
@@ -90,7 +96,8 @@ const apiFacade = {
     signup,
     getAllUsers,
     deleteUser,
-    getAllSongs
+    getAllSongs,
+    editUser
 }
 
 function makeOptions(method, addToken, body) {

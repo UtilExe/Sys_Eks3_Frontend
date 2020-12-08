@@ -73,3 +73,11 @@ ul.header li a:hover:not(.active) {
 .btnBorder {
   border: 2px solid #4717f6;
 }
+
+.btnBorderTwo {
+  margin-right: 37px !important;
+}
+
+.colorGreen {
+  color: green;
+}
