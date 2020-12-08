@@ -11,7 +11,6 @@ import Grid from '@material-ui/core/Grid';
 import AudiotrackIcon from '@material-ui/icons/Audiotrack';
 import AlbumIcon from '@material-ui/icons/Album';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
-import { Container, Divider } from 'semantic-ui-react'
 
 
 import Modal from 'react-modal';
@@ -23,50 +22,22 @@ export function Home() {
                 <h2>Welcome!</h2>
                 <hr className="ownHr"></hr>
             </div>
-            <div>
+            <div class="list-group">
                 <h5>How to use our API?</h5>
-                <ul>
-                    <li>For all visitors of the website:</li>
-                    <ul>
-                        <li>The "Home" tab:</li>
-                        <ul>
-                            <li>This page!</li>
-                        </ul>
-                        <li>The "Address Info" tab:</li>
-                        <ul>
-                            <li>Enter an address and find the nearest postal box as well as a weather report from the city you entered.</li>
-                        </ul>
-                        <li>The "Login" tab:</li>
-                        <ul>
-                            <li>Login and gain access to more content!</li>
-                        </ul>
-                    </ul>
-
-                    <br></br>
-
-                    <li>If you're logged in (more content):</li>
-                    <ul>
-                        <li>As user:</li>
-                        <ul>
-                            <li>The "Movies" tab:</li>
-                            <ul>
-                                <li>Enter a movie title, and get a corresponding review summary and a link to the full review from the New York Times.</li>
-                            </ul>
-                        </ul>
-                        <li>As admin:</li>
-                        <ul>
-                            <li>The "Digital Ocean Info" tab:</li>
-                            <ul>
-                                <li>Lookup information about the Droplets that the hoster has.</li>
-                            </ul>
-                        </ul>
-                    </ul>
-
-                </ul>
+                <ol>
+                    <li>Login.</li>
+                    <li>Go to 'Song Lookup'.</li>
+                    <li>Enter a song title and artist name.</li>
+                    <li>Get the price, lyrics, and a similar artist.</li>
+                    <li>Save all the songs you like to your account.</li>
+                </ol>
+                <h5>You're done!</h5>
             </div>
         </div>
     );
 }
+
+
 
 export function SavedSongs({ savedSongs }) {
 
@@ -93,13 +64,13 @@ export function SavedSongs({ savedSongs }) {
             <Grid container spacing={0}>
                 <Grid item xs={3}>
                     <li className="list-group-item ownList">
-                        <div>
+                        <div className="mb-1">
                             <PeopleAltIcon /> {songA.artist}
                         </div>
-                        <div>
+                        <div className="mb-1">
                             <AudiotrackIcon/> {songA.song}
                         </div>
-                        <div>
+                        <div className="mb-1">
                             <AlbumIcon /> {songA.album}
                         </div>
                     </li>
@@ -112,7 +83,7 @@ export function SavedSongs({ savedSongs }) {
         <div>
             <h2> All Songs</h2>
             <hr className="ownHr"/>
-            <button className="btn btn-black btnBorder" onClick={handleSubmit}>Get Songs</button>
+            <button className="btn btn-black btnBorder btnSongs" onClick={handleSubmit}>Get Songs</button>
             <br />
             <br />
             {displaySongs}
@@ -121,6 +92,8 @@ export function SavedSongs({ savedSongs }) {
         </div>
     )
 }
+
+
 
 export function AdminPage() {
 
@@ -175,8 +148,7 @@ export function AdminPage() {
     const [username, setName] = useState('');
     const [editedPassword, setEditedPassword] = useState('');
     const [editMsg, setEditMsg] = useState("");
-    const pStyle = { color: '#19d21f' };
-    const editStyleColor = <p style={ pStyle }>{editMsg}</p>
+    const editStyleColor = <p className="sucsMsg">{editMsg}</p>
 
     function openModal(username) {
         setIsOpen(true);
@@ -221,7 +193,7 @@ export function AdminPage() {
                     <h2 ref={_subtitle => (subtitle = _subtitle)}>Edit {username}</h2>
                     <form onChange={handleEditChange}>
                         <div>
-                            <input placeholder="Edit password.." id="editPassword" type="password"/>
+                            <input placeholder="Edit password..." id="editPassword" type="password"/>
                         </div>
                         <div>
                             <button onClick={editUserSubmit} className="btn btn-black btnBorder">Submit</button>
@@ -247,6 +219,8 @@ export function AdminPage() {
     )
 }
 
+
+
 export function BookmarkSong({ trackName, artistName, releaseDate, collectionName, bookmark }) {
     const song = trackName;
     const artist = artistName;
@@ -263,6 +237,8 @@ export function BookmarkSong({ trackName, artistName, releaseDate, collectionNam
         </div>
     )
 }
+
+
 
 export function SongLookup({ bookmark }) {
 
@@ -374,8 +350,9 @@ export function SongLookup({ bookmark }) {
     )
 }
 
-export function Login({ login }) {
 
+
+export function Login({ login }) {
     const init = { username: "", password: "" };
     const [loginCredentials, setLoginCredentials] = useState(init);
 
@@ -397,11 +374,6 @@ export function Login({ login }) {
                     <Grid item xs={2} className="mb-2">
                         <input type="password" className="form-control ownInputs" placeholder="Password" id="password" />
                     </Grid>
-
-                    <Grid item xs={2} className="mb-2">
-                    </Grid>
-
-                    <Grid item xs={6}></Grid>
                     
                     <button onClick={performLogin} type="button" className="btn btn-black btnBorder">Login</button>
             </form>
@@ -412,10 +384,12 @@ export function Login({ login }) {
             <Link to={"/sign-up"}>
                 <button type="button" className="btn btn-black btnBorder">Sign Up</button>
             </Link>
-            <hr />
+            <hr className="ownHr" />
         </div>
     )
 }
+
+
 
 export function Signup({ signup }) {
 
@@ -433,19 +407,30 @@ export function Signup({ signup }) {
     return (
         <div>
             <h2>Sign up</h2>
+            <hr className="ownHr" />
             <form onChange={onChange}>
-                <input placeholder="Username" id="username" />
-                <br />
-                <input placeholder="Password" id="password" />
-                <br />
-                <input placeholder="Password Checked" id="passwordCheck" />
-                <br />
-                <button onClick={performSignup} type="button" className="btn btn-black btnBorder">Signup</button>
+                    <Grid item xs={2} className="mb-2">
+                        <input className="form-control ownInputs" placeholder="Username..." id="username" />
+                    </Grid>
+                    <Grid item xs={2} className="mb-2">
+                        <input type="password" className="form-control ownInputs" placeholder="Password..." id="password" />
+                    </Grid>
+
+                    <Grid item xs={2} className="mb-2">
+                        <input type="password" className="form-control ownInputs" placeholder="Re-enter password..." id="passwordCheck" />
+                    </Grid>
+
+                    <Grid item xs={2} className="mb-2">
+                        <button onClick={performSignup} type="button" className="btn btn-black btnBorder">Signup</button>
+                    </Grid>
             </form>
+            <hr className="ownHr" />
         </div>
     )
 
 }
+
+
 
 export function LoggedIn({ username }) {
 
@@ -460,11 +445,15 @@ export function LoggedIn({ username }) {
 }
 
 
+
+
 const Log = ({ value, replacer = null, space = 2 }) => (
     <pre>
         <code>{JSON.stringify(value, replacer, space)}</code>
     </pre>
 )
+
+
 
 export function NoMatch() {
     return (

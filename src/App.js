@@ -31,6 +31,7 @@ function App() {
   const [username, setUserName] = useState("");
   const [signUpMsg, setSignUpMsg] = useState("");
   const [savedSongs, setSavedSongs] = useState([]);
+  const [isSignedUp, setIsSignedUp] = useState("");
 
   const logout = () => {
     apiFacade.logout()
@@ -38,6 +39,7 @@ function App() {
   }
 
   const login = (user, pass) => {
+    setError("");
     setUserName(user);
     apiFacade.login(user, pass)
       .then(res => {
@@ -54,10 +56,12 @@ function App() {
     apiFacade.signup(user, pass, passChecked)
       .then(res => {
         setError('');
-        setSignUpMsg("Works!");
+        setSignUpMsg("Your account has been created!");
+        setIsSignedUp(true);
       })
       .catch(err => {
-        setError("Couldn't register, see error in console for further information");
+        setIsSignedUp(false);
+        setSignUpMsg("Couldn't register, please try again later.");
         console.log(err);
         Promise.resolve(err.fullError).then(function(value) {
           setSignUpMsg(value.message);
@@ -106,8 +110,8 @@ function App() {
 
               <Route path="/sign-up">
                 <Signup signup={signup} />
-                <br/>
-                {signUpMsg}
+                { !isSignedUp ? (<p className="errMsg">{signUpMsg}</p>) :
+                  (<p className="sucsMsg">{signUpMsg}</p>)}
               </Route>
 
               <Route path="/login-out">
@@ -117,7 +121,7 @@ function App() {
                     <LoggedIn username={username}/>
                     <button onClick={logout} className="btn btn-black btnBorder">Logout</button>
                   </div>)}
-                  {error}
+                  <p className="errMsg">{error}</p>
                 </div>
               </Route>
 
