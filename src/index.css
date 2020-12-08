@@ -6,7 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #0e0b16 !important;
-  color: white !important;
+  color: whitesmoke !important;
 }
 
 code {
@@ -15,10 +15,10 @@ code {
 }
 
 hr {
-  background-color: white;
+  background-color: whitesmoke;
 }
 h2 {
-  color: white;
+  color: whitesmoke;
 }
 
 button {
@@ -27,7 +27,7 @@ button {
 
 ul.header {
   list-style-type: none;
-  margin: 0;
+  margin: 0px 0px 15px 0px;
   padding: 0;
   overflow: hidden;
   background-color: #333;
@@ -39,7 +39,7 @@ ul.header li {
 
 ul.header li a {
   display: block;
-  color: white;
+  color: whitesmoke;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
@@ -78,6 +78,22 @@ ul.header li a:hover:not(.active) {
   margin-right: 37px !important;
 }
 
-.colorGreen {
-  color: green;
+.ownInputs {
+  background-color: white;
+  outline-color: #4717f6;
+  border: 2px solid #4717f6;
+  border-radius: 5px;
+}
+
+.giveMeSpace {
+  margin-bottom: 200px;
+}
+
+.ownHr {
+  border-color: whitesmoke;
+}
+
+.ownList {
+  background: linear-gradient(to bottom right, #4717f6, #1b17f6);
+  border-radius: 20px !important;
 }

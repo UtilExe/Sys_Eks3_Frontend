@@ -7,9 +7,10 @@ import jwt_decode from "jwt-decode";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import Pagination from 'react-paginate';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import AudiotrackIcon from '@material-ui/icons/Audiotrack';
+import AlbumIcon from '@material-ui/icons/Album';
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 
 import Modal from 'react-modal';
 
@@ -18,7 +19,7 @@ export function Home() {
         <div>
             <div>
                 <h2>Welcome!</h2>
-                <hr></hr>
+                <hr className="ownHr"></hr>
             </div>
             <div>
                 <h5>How to use our API?</h5>
@@ -86,20 +87,34 @@ export function SavedSongs({ savedSongs }) {
     }
 
     let displaySongs = songs.map((songA) => (
-        <ul key={songA.song}>
-            <li> Song: {songA.song} </li>
-            <li> Artist: {songA.artist} </li>
-            <li> Album: {songA.album} </li>
+        <ul className="list-group mb-4" key={songA.song}>
+            <Grid container spacing={0}>
+                <Grid item xs={3}>
+                    <li className="list-group-item ownList">
+                        <div>
+                            <PeopleAltIcon /> {songA.artist}
+                        </div>
+                        <div>
+                            <AudiotrackIcon/> {songA.song}
+                        </div>
+                        <div>
+                            <AlbumIcon /> {songA.album}
+                        </div>
+                    </li>
+                </Grid>
+            </Grid>
         </ul>
     ))
 
     return (
         <div>
             <h2> All Songs</h2>
+            <hr className="ownHr"/>
             <button className="btn btn-black btnBorder" onClick={handleSubmit}>Get Songs</button>
             <br />
             <br />
             {displaySongs}
+            <hr className="ownHr"/>
             {error}
         </div>
     )
@@ -199,7 +214,6 @@ export function AdminPage() {
                     <h2 ref={_subtitle => (subtitle = _subtitle)}>Edit {username}</h2>
                     <form onChange={handleEditChange}>
                         <div>
-                            <p>Edit password:</p>
                             <input placeholder="Edit password.." id="editPassword" type="password"/>
                         </div>
                         <div>
@@ -259,7 +273,7 @@ export function SongLookup({ bookmark }) {
             <p><b>Country:</b> {song.country}</p>
             <p><b>Currency:</b> {song.currency}</p>
             <p><b>Collection Name:</b> {song.collectionName}</p>
-            <hr />
+            <hr className="ownHr" />
             <BookmarkSong bookmark={bookmark} trackName={song.trackName} artistName={song.artistName} releaseDate={song.releaseDate} collectionName={song.collectionName} />
         </div>
     ))
@@ -270,7 +284,7 @@ export function SongLookup({ bookmark }) {
             <p><b>Teaser:</b> {song.wTeaser}</p>
             <p><b>Wikipedia URL:</b> {song.wUrl}</p>
 
-            <hr />
+            <hr className="ownHr" />
         </div>
     ))
 
@@ -291,86 +305,63 @@ export function SongLookup({ bookmark }) {
     };
 
     return (
-        /* <div>
-            <h2>Song Lookup</h2>
-            <hr />
-            <div className="wrapper">
-                <form onChange={handleChange}>
-                    <div className="row">
-                        <div className="one">
-                            <p>Song title</p>
-                            <input placeholder="Song title..." id="song" />
-                        </div>
-                        <div className="two">
-                            <p>Song artist</p>
-                            <input placeholder="Song artist..." id="artist" />
-                        </div>
-                    </div>
-                <div className="one">
-                    <button type="button" onClick={handleSubmit} className="btn btn-black btnBorder">Go!</button>
-                </div>
-            </form>
-        </div> */
-
         <React.Fragment>
-            <CssBaseline />
-            <Container maxWidth="lg">
-                <div>
-                    <h2>Song Lookup</h2>
-                    <hr/>
-                    <form onChange={handleChange}>
+            <div>
+                <h2>Song Lookup</h2>
+                <hr className="ownHr"/>
+                <form onChange={handleChange}>
+                    
+                    <div>
                         
-                        <div>
-                            <Grid container spacing={3}>
-                                <Grid item xs={2}>
-                                    <p>Song title</p>
-                                    <input placeholder="Song title..." id="song" />
-                                </Grid>
-                            
-                                <Grid item xs={2}>
-                                    <p>Song artist</p>
-                                    <input placeholder="Song artist..." id="artist" />
-                                </Grid>
-
-                                <Grid item xs={8}></Grid>
-
+                            <Grid item xs={2} className="mb-2">
+                                <input className="form-control ownInputs" id="song" placeholder="Song title" />
+                            </Grid>
+                        
+                            <Grid item xs={2} className="mb-2">
+                                <input className="form-control ownInputs" id="artist" placeholder="Song artist..." />
                             </Grid>
 
-                            <button type="button" onClick={handleSubmit} className="btn btn-black btnBorder">Go!</button>
-                        </div>
+                            <Grid item xs={2} className="mb-2">
+                                <button type="button" onClick={handleSubmit} className="btn btn-black btnBorder">Go!</button>
+                            </Grid>
 
-                    </form>
-                </div>
-                    
-                <div>
-                    <hr/>
-                    <h3>Information received goes here...</h3>
+                            <Grid item xs={6}></Grid>
+                        
+                    </div>
 
-                    <Tabs>
-                        <TabList>
+                </form>
+
+            </div>
+                
+            <div>
+
+                <Tabs>
+                    <TabList>
+                        <div className="d-flex justify-content-center">
                             <Tab>iTunes Price</Tab>
                             <Tab>Song Lyrics</Tab>
                             <Tab>Similar Artist</Tab>
-                        </TabList>
+                        </div>
+                    </TabList>
 
-                        <TabPanel>
-                            <div>
-                                {printItunes}
-                            </div>
-                        </TabPanel>
-                        <TabPanel>
-                            <div>
-                                {printLyrics}
-                            </div>
-                        </TabPanel>
-                        <TabPanel>
-                            <div>
-                                {similarArtistData}
-                            </div>
-                        </TabPanel>
-                    </Tabs>
-                </div>
-            </Container>
+                    <TabPanel>
+                        <div>
+                            {printItunes}
+                        </div>
+                    </TabPanel>
+                    <TabPanel>
+                        <div>
+                            {printLyrics}
+                        </div>
+                    </TabPanel>
+                    <TabPanel>
+                        <div>
+                            {similarArtistData}
+                        </div>
+                    </TabPanel>
+                </Tabs>
+                
+            </div>
         </React.Fragment>
     )
 }
@@ -391,15 +382,24 @@ export function Login({ login }) {
         <div>
             <h2>Login here</h2>
             <form onChange={onChange}>
-                <input placeholder="Username" id="username" />
-                <br />
-                <input placeholder="Password" id="password" />
-                <br />
-                <button onClick={performLogin} type="button" className="btn btn-black btnBorder">Login</button>
+                    <Grid item xs={2} className="mb-2">
+                        <input className="form-control ownInputs" placeholder="Username" id="username" />
+                    </Grid>
+
+                    <Grid item xs={2} className="mb-2">
+                        <input type="password" className="form-control ownInputs" placeholder="Password" id="password" />
+                    </Grid>
+
+                    <Grid item xs={2} className="mb-2">
+                    </Grid>
+
+                    <Grid item xs={6}></Grid>
+                    
+                    <button onClick={performLogin} type="button" className="btn btn-black btnBorder">Login</button>
             </form>
 
             <br />
-            <hr />
+            <hr className="ownHr" />
             <h2>Don't have an account?</h2>
             <Link to={"/sign-up"}>
                 <button type="button" className="btn btn-black btnBorder">Sign Up</button>
