@@ -6,11 +6,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import jwt_decode from "jwt-decode";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import Pagination from 'react-paginate';
+import Pagination from './Test/Pagination';
 import Grid from '@material-ui/core/Grid';
 import AudiotrackIcon from '@material-ui/icons/Audiotrack';
 import AlbumIcon from '@material-ui/icons/Album';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
+import Users from './Test/Users';
 
 
 import Modal from 'react-modal';
@@ -98,6 +99,10 @@ export function SavedSongs({ savedSongs }) {
 export function AdminPage() {
 
     const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [usersPerPage, setUsersPerPage] = useState(10);
+
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -119,102 +124,24 @@ export function AdminPage() {
             })
     }
 
-    let displayUsers = users.map((user) => (
-        <ul className="list-group">
-      <li className="list-group-item list-group-test">
-      <div className="btn-toolbar">
-      <ul key={user.username}>Username: {user.username} <br/>
-        <button className="btn btn-black btnBorder btn-sm mr-2" onClick={() => handleDelete(user.username)}>Delete</button> 
-         <button className="btn btn-black btnBorder btn-sm mr-2" onClick={() => openModal(user.username)}>Edit </button> 
-        </ul>
-        </div>
-        </li>
-        </ul>
-    ))
+    // Get current page posts
+    const indexOfLastPost = currentPage * usersPerPage;
+    const indexOfFirstPost = indexOfLastPost - usersPerPage;
+    const currentUsers = users.slice(indexOfFirstPost, indexOfLastPost);
 
-    Modal.setAppElement('#root')
-    const customStyles = {
-        content: {
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            marginRight: '-50%',
-            transform: 'translate(-50%, -50%)',
-            background: "#1b103a"
-        }
-    };
-
-    const [username, setName] = useState('');
-    const [editedPassword, setEditedPassword] = useState('');
-    const [editMsg, setEditMsg] = useState("");
-    const editStyleColor = <p className="sucsMsg">{editMsg}</p>
-
-    function openModal(username) {
-        setIsOpen(true);
-        setName(username);
-    }
-
-    var subtitle;
-    const [modalIsOpen, setIsOpen] = useState(false);
-
-    function afterOpenModal() {
-        // references are now sync'd and can be accessed.
-        subtitle.style.color = '#FFFFFF';
-    }
-
-    function closeModal(username) {
-        setIsOpen(false);
-    }
-
-    function editUserSubmit(event) {
-        event.preventDefault();
-        apiFacade.editUser(username, editedPassword)
-        .then(res => {
-            closeModal();
-            setEditMsg("The password has been updated!");
-          })
-    }
-
-    function handleEditChange(event) {
-        setEditedPassword(event.target.value);
-    };
-
-    function modalShow() {
-        return (
-            <div>
-                <Modal
-                    isOpen={modalIsOpen}
-                    onAfterOpen={afterOpenModal}
-                    onRequestClose={closeModal}
-                    style={customStyles}
-                    contentLabel="Example Modal">
-
-                    <h2 ref={_subtitle => (subtitle = _subtitle)}>Edit {username}</h2>
-                    <form onChange={handleEditChange}>
-                        <div>
-                            <input placeholder="Edit password..." id="editPassword" type="password"/>
-                        </div>
-                        <div>
-                            <button onClick={editUserSubmit} className="btn btn-black btnBorder">Submit</button>
-                            <button onClick={closeModal} className="btn btn-black btnBorder btnBorderTwo">Close</button>
-                        </div>
-                    </form>
-                </Modal>
-            </div>
-        )
-    }
+    const paginate = pageNumber => setCurrentPage(pageNumber)
 
     return (
         <div>
             <h2> All Users</h2>
             <hr className="ownHr"/>
             <button className="btn btn-black btnBorder" onClick={handleSubmit}>Get Users</button> <br/> <br/>
-            {displayUsers}
             <hr className="ownHr"/>
-            {editStyleColor}
-            <Pagination count={10} variant="outlined" />
-            {modalShow()}
+            <Users users={currentUsers} loading={loading} handleDelete={handleDelete} />
+            <Pagination 
+            usersPerPage={usersPerPage} 
+            totalUsers={users.length} 
+            paginate={paginate} />
         </div>
     )
 }
