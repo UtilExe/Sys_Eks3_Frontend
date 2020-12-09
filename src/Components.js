@@ -132,7 +132,7 @@ export function AdminPage() {
         event.preventDefault();
         apiFacade.getAllUsers()
             .then(array => {
-                setUsers(array)
+                setPosts(array)
             })
     }
 
@@ -144,7 +144,7 @@ export function AdminPage() {
     function updateUsers() {
         apiFacade.getAllUsers()
             .then(array => {
-                setUsers(array)
+                setPosts(array)
             })
     }
 
@@ -254,7 +254,7 @@ export function AdminPage() {
             <h2> All Users</h2>
             <hr className="ownHr"/>
             {editStyleColor}
-            <Posts posts={currentPosts} loading={loading} />
+            <Posts posts={currentPosts} loading={loading} handleDelete={handleDelete} />
             <Pagination
         postsPerPage={postsPerPage}
         totalPosts={posts.length}
