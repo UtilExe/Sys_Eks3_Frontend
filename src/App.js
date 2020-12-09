@@ -23,6 +23,7 @@ import {
 import apiFacade from './apiFacade';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
+import jwt_decode from "jwt-decode";
 
 
 function App() {
@@ -32,11 +33,16 @@ function App() {
   const [signUpMsg, setSignUpMsg] = useState("");
   const [savedSongs, setSavedSongs] = useState([]);
   const [isSignedUp, setIsSignedUp] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const logout = () => {
     apiFacade.logout()
     setLoggedIn(false)
+    setIsAdmin(false)
+    setUserName("")
   }
+
+  let decoded;
 
   const login = (user, pass) => {
     setError("");
@@ -45,6 +51,13 @@ function App() {
       .then(res => {
         setLoggedIn(true)
         setError('');
+
+        // Used to show admin menu, if role is an admin.  
+        const token = apiFacade.getToken();
+        decoded = jwt_decode(token); // jwt_decode is an external library
+        if (decoded.roles === "admin") {
+          setIsAdmin(true);
+        }
       })
       .catch(err => {
         setError("Couldn't log you in, see error in console for further information");
@@ -80,6 +93,7 @@ function App() {
       })
   }
 
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -89,6 +103,7 @@ function App() {
             <Header
               loginMsg={loggedIn ? "Logout" : "Login"}
               isLoggedIn={loggedIn}
+              isAdminData={isAdmin}
             />
             <Switch>
 
@@ -135,7 +150,7 @@ function App() {
   );
 }
 
-function Header({ isLoggedIn, loginMsg }) {
+function Header({ isLoggedIn, loginMsg, isAdminData }) {
   return (
     <ul className="header">
       <li><NavLink exact activeClassName="active" to="/">Home</NavLink></li>
@@ -145,7 +160,14 @@ function Header({ isLoggedIn, loginMsg }) {
           <React.Fragment>
             <li><NavLink activeClassName="active" to="/song-lookup">Song Lookup</NavLink></li>
             <li><NavLink exact activeClassName="active" to="/my-songs">My Songs</NavLink></li>
-            <li><NavLink exact activeClassName="active" to="/admin-page">Admin Page</NavLink></li>
+          </React.Fragment>
+        )
+      }
+      {
+        isAdminData &&
+        (
+          <React.Fragment>
+          <li><NavLink exact activeClassName="active" to="/admin-page">Admin Page</NavLink></li>
           </React.Fragment>
         )
       }

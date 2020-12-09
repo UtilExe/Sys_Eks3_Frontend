@@ -83,8 +83,8 @@ const Users = ({ users, loading, handleDelete, handleEditChange }) => {
         return <h2>Loading... </h2>;
     }
 
-    let displayUsers = users.map((user) => (
-        <ul className="list-group">
+    let displayUsers = users.map((user, index) => (
+        <ul key={index} className="list-group">
             <li className="list-group-item list-group-test">
                 <div className="btn-toolbar">
                     <ul key={user.username}>Username: {user.username} <br/>

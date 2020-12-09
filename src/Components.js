@@ -21,7 +21,7 @@ export function Home() {
                 <h2>Welcome!</h2>
                 <hr className="ownHr"></hr>
             </div>
-            <div class="list-group">
+            <div className="list-group">
                 <h5>How to use our API?</h5>
                 <ol>
                     <li>Login.</li>
