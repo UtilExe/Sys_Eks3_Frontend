@@ -20,9 +20,8 @@ const Users = ({ users, loading, handleDelete, handleEditChange }) => {
 
     const [username, setName] = useState('');
     const [editedPassword, setEditedPassword] = useState('');
-    const [editMsg, setEditMsg] = useState("");
-    const pStyle = { color: '#19d21f' };
-    const editStyleColor = <p style={ pStyle }>{editMsg}</p>
+    const [editMsg, setEditMsg] = useState('');
+    const editStyleColor = <p className="sucsMsg">{editMsg}</p>
 
     function openModal(username) {
         setIsOpen(true);
@@ -100,6 +99,7 @@ const Users = ({ users, loading, handleDelete, handleEditChange }) => {
         <div>
             {displayUsers}
             {modalShow()}
+            {editStyleColor}
         </div>
     )
 }
