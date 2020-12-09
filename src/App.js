@@ -42,7 +42,7 @@ function App() {
     setLoggedIn(false)
     setIsAdmin(false)
     setUserName("")
-    setAToken((""))
+    setAToken("")
   }
 
   let decoded;
@@ -50,8 +50,9 @@ function App() {
 
   console.log(Atoken)
   console.log("isadmin", isAdmin)
-  if (Atoken != "" && isAdmin == false) {
+  if (Atoken != null && Atoken != "" && isAdmin == false) {
     console.log("hi")
+    console.log(Atoken)
     decoded = jwt_decode(Atoken);
     if (decoded.roles === "admin") {
       console.log("hi2")
