@@ -68,7 +68,7 @@ function App() {
 
       })
       .catch(err => {
-        setError("Couldn't log you in, see error in console for further information");
+        setError("Couldn't log you in, make sure the username and password are correct.");
         console.log(err);
       })
   }
