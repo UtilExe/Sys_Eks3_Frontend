@@ -71,7 +71,7 @@ const Users = ({ users, loading, handleDelete, handleEditChange }) => {
                         </div>
                         <div>
                             <button onClick={editUserSubmit} className="btn btn-black btnBorder">Submit</button>
-                            <button onClick={closeModal} className="btn btn-black btnBorder btnBorderTwo">Close</button>
+                            <button onClick={closeModal} Style="" className="btn btn-black btnBorder btnBorderClose">Close</button>
                         </div>
                     </form>
                 </Modal>
