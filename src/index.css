@@ -30,7 +30,8 @@ ul.header {
   margin: 0px 0px 15px 0px;
   padding: 0;
   overflow: hidden;
-  background: linear-gradient(to right, #333, #111);
+  background: linear-gradient(to right, #333, #0e0b16);
+  border-radius: 0px 0px 2px 2px;
 }
 
 ul.header li {

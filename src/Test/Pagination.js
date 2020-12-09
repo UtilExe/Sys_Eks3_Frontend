@@ -1,5 +1,4 @@
 import React from 'react';
-import { PaginationItem } from 'semantic-ui-react';
 
 const Pagination = ({ usersPerPage, totalUsers, paginate }) => {
     const pageNumbers = [];

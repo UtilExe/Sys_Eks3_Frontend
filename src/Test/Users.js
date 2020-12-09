@@ -63,10 +63,11 @@ const Users = ({ users, loading, handleDelete, handleEditChange }) => {
                     style={customStyles}
                     contentLabel="Example Modal">
 
-                    <h2 ref={_subtitle => (subtitle = _subtitle)}>Edit {username}</h2>
+                    <h2 className="mb-0" ref={_subtitle => (subtitle = _subtitle)}>Edit {username}</h2>
+                    <hr className="ownHr mt-1"></hr>
                     <form onChange={handleEditChange}>
                         <div>
-                            <input placeholder="Edit password.." id="editPassword" type="password"/>
+                            <input className="form-control ownInputs mb-3" placeholder="Edit password.." id="editPassword" type="password"/>
                         </div>
                         <div>
                             <button onClick={editUserSubmit} className="btn btn-black btnBorder">Submit</button>
