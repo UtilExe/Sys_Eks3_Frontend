@@ -88,7 +88,8 @@ const Users = ({ users, loading, handleDelete, handleEditChange }) => {
             <ul className="list-group">
                 <li className="list-group-item list-group-test">
                     <div className="btn-toolbar">
-                        <ul key={user.username}>Username: {user.username} <br/>
+                        <ul key={user.username}>
+                            <p>Username: {user.username}</p>
                             <button className="btn btn-black btnBorder btn-sm mr-2" onClick={() => handleDelete(user.username)}>Delete</button> 
                             <button className="btn btn-black btnBorder btn-sm mr-2" onClick={() => openModal(user.username)}>Edit </button> 
                         </ul>
