@@ -352,34 +352,25 @@ export function Signup({ signup }) {
             <hr className="ownHr" />
         </div>
     )
-
 }
 
-
-
-export function LoggedIn({ username }) {
-
+export function LoggedIn() {
     const token = apiFacade.getToken();
     const decoded = jwt_decode(token); // jwt_decode is an external library
-    username = decoded.username;
+
     return (
         <div>
             <h2>You are now logged in!</h2>
-            <p>Welcome {username}, your role is: {decoded.roles}</p>
+            <p>Welcome {decoded.username}, your role is: {decoded.roles}</p>
         </div>
     )
 }
-
-
-
 
 const Log = ({ value, replacer = null, space = 2 }) => (
     <pre>
         <code>{JSON.stringify(value, replacer, space)}</code>
     </pre>
 )
-
-
 
 export function NoMatch() {
     return (

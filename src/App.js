@@ -27,55 +27,45 @@ import jwt_decode from "jwt-decode";
 
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [error, setError] = useState('');
-  const [username, setUserName] = useState("");
+  const [error, setError] = useState('')
   const [signUpMsg, setSignUpMsg] = useState("");
   const [savedSongs, setSavedSongs] = useState([]);
   const [isSignedUp, setIsSignedUp] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const [Atoken, setAToken] = useState(apiFacade.getToken());
+  const [token, setToken] = useState(apiFacade.getToken());
 
   const logout = () => {
     apiFacade.logout()
-    setLoggedIn(false)
     setIsAdmin(false)
-    setUserName("")
-    setAToken("")
+    setToken("")
   }
 
   let decoded;
-  let token = "";
 
-  console.log(Atoken)
-  console.log("isadmin", isAdmin)
-  if (Atoken != null && Atoken != "" && isAdmin == false) {
-    console.log("hi")
-    console.log(Atoken)
-    decoded = jwt_decode(Atoken);
+  // Upon reloading the page, isAdmin will return false by default, and result in admin page not showing.
+  // We want to "prevent" this if the token is active, and the .roles is admin.
+  if (token != null && token != "" && isAdmin == false) {
+    decoded = jwt_decode(token);
     if (decoded.roles === "admin") {
-      console.log("hi2")
     setIsAdmin(true);
   }
   }
-  console.log("isadmin", isAdmin)
 
   const login = (user, pass) => {
     setError("");
-    setUserName(user);
     apiFacade.login(user, pass)
       .then(res => {
-        setLoggedIn(true)
         setError('');
 
         // Used to show admin menu, if role is an admin.  
-        token = apiFacade.getToken();
-        setAToken(token)
+        let token = apiFacade.getToken();
+        setToken(apiFacade.getToken())
         decoded = jwt_decode(token); // jwt_decode is an external library
         if (decoded.roles === "admin") {
           setIsAdmin(true);
         }
+
       })
       .catch(err => {
         setError("Couldn't log you in, see error in console for further information");
@@ -111,7 +101,6 @@ function App() {
       })
   }
 
-
   return (
     <React.Fragment>
       <CssBaseline />
@@ -119,9 +108,8 @@ function App() {
         <Router>
           <div>
             <Header
-              Atoken={Atoken}
-              loginMsg={Atoken ? "Logout" : "Login"}
-              isLoggedIn={loggedIn}
+              token={token}
+              loginMsg={token ? "Logout" : "Login"}
               isAdminData={isAdmin}
             />
             <Switch>
@@ -150,9 +138,9 @@ function App() {
 
               <Route path="/login-out">
                 <div>
-                  {!apiFacade.getToken() ? (<Login login={login} />) :
+                  {!token ? (<Login login={login} />) :
                   (<div>
-                    <LoggedIn username={username}/>
+                    <LoggedIn/>
                     <button onClick={logout} className="btn btn-black btnBorder">Logout</button>
                   </div>)}
                   <p className="errMsg">{error}</p>
@@ -160,7 +148,6 @@ function App() {
               </Route>
 
               <Route component={NoMatch}></Route>
-
             </Switch>
           </div>
         </Router>
@@ -169,12 +156,12 @@ function App() {
   );
 }
 
-function Header({ isLoggedIn, loginMsg, isAdminData, Atoken }) {
+function Header({loginMsg, isAdminData, token}) {
   return (
     <ul className="header">
       <li><NavLink exact activeClassName="active" to="/">Home</NavLink></li>
       {
-        Atoken &&
+        token &&
         (
           <React.Fragment>
             <li><NavLink activeClassName="active" to="/song-lookup">Song Lookup</NavLink></li>
