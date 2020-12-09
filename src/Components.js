@@ -361,6 +361,7 @@ export function LoggedIn({ username }) {
 
     const token = apiFacade.getToken();
     const decoded = jwt_decode(token); // jwt_decode is an external library
+    username = decoded.username;
     return (
         <div>
             <h2>You are now logged in!</h2>

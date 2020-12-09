@@ -35,14 +35,30 @@ function App() {
   const [isSignedUp, setIsSignedUp] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
 
+  const [Atoken, setAToken] = useState(apiFacade.getToken());
+
   const logout = () => {
     apiFacade.logout()
     setLoggedIn(false)
     setIsAdmin(false)
     setUserName("")
+    setAToken((""))
   }
 
   let decoded;
+  let token = "";
+
+  console.log(Atoken)
+  console.log("isadmin", isAdmin)
+  if (Atoken != "" && isAdmin == false) {
+    console.log("hi")
+    decoded = jwt_decode(Atoken);
+    if (decoded.roles === "admin") {
+      console.log("hi2")
+    setIsAdmin(true);
+  }
+  }
+  console.log("isadmin", isAdmin)
 
   const login = (user, pass) => {
     setError("");
@@ -53,7 +69,8 @@ function App() {
         setError('');
 
         // Used to show admin menu, if role is an admin.  
-        const token = apiFacade.getToken();
+        token = apiFacade.getToken();
+        setAToken(token)
         decoded = jwt_decode(token); // jwt_decode is an external library
         if (decoded.roles === "admin") {
           setIsAdmin(true);
@@ -101,7 +118,8 @@ function App() {
         <Router>
           <div>
             <Header
-              loginMsg={loggedIn ? "Logout" : "Login"}
+              Atoken={Atoken}
+              loginMsg={Atoken ? "Logout" : "Login"}
               isLoggedIn={loggedIn}
               isAdminData={isAdmin}
             />
@@ -131,7 +149,7 @@ function App() {
 
               <Route path="/login-out">
                 <div>
-                  {!loggedIn ? (<Login login={login} />) :
+                  {!apiFacade.getToken() ? (<Login login={login} />) :
                   (<div>
                     <LoggedIn username={username}/>
                     <button onClick={logout} className="btn btn-black btnBorder">Logout</button>
@@ -150,12 +168,12 @@ function App() {
   );
 }
 
-function Header({ isLoggedIn, loginMsg, isAdminData }) {
+function Header({ isLoggedIn, loginMsg, isAdminData, Atoken }) {
   return (
     <ul className="header">
       <li><NavLink exact activeClassName="active" to="/">Home</NavLink></li>
       {
-        isLoggedIn &&
+        Atoken &&
         (
           <React.Fragment>
             <li><NavLink activeClassName="active" to="/song-lookup">Song Lookup</NavLink></li>
