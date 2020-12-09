@@ -71,7 +71,7 @@ const Users = ({ users, loading, handleDelete, handleEditChange }) => {
                         </div>
                         <div>
                             <button onClick={editUserSubmit} className="btn btn-black btnBorder">Submit</button>
-                            <button onClick={closeModal} className="btn btn-black btnBorder btnBorderTwo">Close</button>
+                            <button onClick={closeModal} Style="" className="btn btn-black btnBorder btnBorderClose">Close</button>
                         </div>
                     </form>
                 </Modal>
@@ -84,16 +84,20 @@ const Users = ({ users, loading, handleDelete, handleEditChange }) => {
     }
 
     let displayUsers = users.map((user, index) => (
-        <ul key={index} className="list-group">
-            <li className="list-group-item list-group-test">
-                <div className="btn-toolbar">
-                    <ul key={user.username}>Username: {user.username} <br/>
-                        <button className="btn btn-black btnBorder btn-sm mr-2" onClick={() => handleDelete(user.username)}>Delete</button> 
-                        <button className="btn btn-black btnBorder btn-sm mr-2" onClick={() => openModal(user.username)}>Edit </button> 
-                    </ul>
-                </div>
-            </li>
-        </ul>
+        <div key={index}>
+            <ul className="list-group">
+                <li className="list-group-item list-group-test">
+                    <div className="btn-toolbar">
+                        <ul key={user.username}>
+                            <p>Username: {user.username}</p>
+                            <button className="btn btn-black btnBorder btn-sm mr-2" onClick={() => handleDelete(user.username)}>Delete</button> 
+                            <button className="btn btn-black btnBorder btn-sm mr-2" onClick={() => openModal(user.username)}>Edit </button> 
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <hr className="allUsersHr"></hr>
+        </div>
     ))
 
     return (

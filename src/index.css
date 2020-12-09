@@ -79,6 +79,11 @@ ul.header li a:hover:not(.active) {
   margin-right: 37px !important;
 }
 
+.btnBorderClose {
+  border: 2px outset firebrick;
+  margin-left: 10px;
+}
+
 .ownInputs {
   background-color: white;
   border: 2px solid #333;
@@ -94,13 +99,12 @@ ul.header li a:hover:not(.active) {
 }
 
 .ownList {
-  background: linear-gradient(to bottom right, #333, #111);
+  background: linear-gradient(to bottom right, #333, #0e0b16);
   border-radius: 20px !important;
 }
 
 .list-group-test {
-  background-color: transparent !important;
-  border-top: 1px solid #6f6f8673 !important;
+  background-color: inherit;
 }
 
 .errMsg {
@@ -109,4 +113,23 @@ ul.header li a:hover:not(.active) {
 
 .sucsMsg {
   color: #19d21f;
+}
+
+.paginationStyle {
+  background-color: #333;
+  color: whitesmoke;
+  border: 1px solid #222;
+}
+
+.paginationStyle:hover {
+  background-color: #222;
+  color: whitesmoke;
+  border: 1px solid #111;
+}
+
+.allUsersHr {
+  border-top: 1px solid #6f6f8673;
+  border-bottom: 1px solid #6f6f8673;
+  max-width: 90%;
+  background-color: #6f6f8673;
 }
