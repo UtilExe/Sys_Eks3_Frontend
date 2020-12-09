@@ -84,16 +84,19 @@ const Users = ({ users, loading, handleDelete, handleEditChange }) => {
     }
 
     let displayUsers = users.map((user, index) => (
-        <ul key={index} className="list-group">
-            <li className="list-group-item list-group-test">
-                <div className="btn-toolbar">
-                    <ul key={user.username}>Username: {user.username} <br/>
-                        <button className="btn btn-black btnBorder btn-sm mr-2" onClick={() => handleDelete(user.username)}>Delete</button> 
-                        <button className="btn btn-black btnBorder btn-sm mr-2" onClick={() => openModal(user.username)}>Edit </button> 
-                    </ul>
-                </div>
-            </li>
-        </ul>
+        <div key={index}>
+            <ul className="list-group">
+                <li className="list-group-item list-group-test">
+                    <div className="btn-toolbar">
+                        <ul key={user.username}>Username: {user.username} <br/>
+                            <button className="btn btn-black btnBorder btn-sm mr-2" onClick={() => handleDelete(user.username)}>Delete</button> 
+                            <button className="btn btn-black btnBorder btn-sm mr-2" onClick={() => openModal(user.username)}>Edit </button> 
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <hr className="allUsersHr"></hr>
+        </div>
     ))
 
     return (
