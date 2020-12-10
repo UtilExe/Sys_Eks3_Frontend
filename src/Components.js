@@ -92,8 +92,6 @@ export function SavedSongs({ savedSongs }) {
     )
 }
 
-
-
 export function AdminPage() {
 
     const [users, setUsers] = useState([]);
@@ -121,6 +119,10 @@ export function AdminPage() {
                 setUsers(array)
             })
     }
+    
+    useEffect(() => {
+        updateUsers();
+    }, [users])
 
     // Get current page posts
     const indexOfLastPost = currentPage * usersPerPage;
@@ -132,8 +134,6 @@ export function AdminPage() {
     return (
         <div>
             <h2> All Users</h2>
-            <hr className="ownHr"/>
-            <button className="btn btn-black btnBorder" onClick={handleSubmit}>Get Users</button> <br/> <br/>
             <hr className="ownHr"/>
             <Users users={currentUsers} loading={loading} handleDelete={handleDelete} />
             <Pagination 
